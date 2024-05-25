@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:palace_agency/features/details/presentation/screens/details_screen.dart';
+import 'package:palace_agency/features/details/presentation/screens/gallery_screen.dart';
+import 'package:palace_agency/features/home/domain/entities/real_estate_entity.dart';
 import 'features/discovery/presentation/screens/discovery_screen.dart';
 import 'features/history/presentation/screens/history_screen.dart';
 import 'features/home/presentation/screens/home_screen.dart';
@@ -16,6 +18,7 @@ class RouteNames {
   static const String history = '/history';
   static const String profile = '/profile';
   static const String details = '/details';
+  static const String gallery = '/gallery';
 }
 
 final GoRouter router = GoRouter(
@@ -31,7 +34,7 @@ final GoRouter router = GoRouter(
           pageBuilder: (context, state) {
             return CustomTransitionPage(
               key: state.pageKey,
-              child: const HomeScreen(),
+              child: HomeScreen(),
               transitionsBuilder: (context, animation, secondaryAnimation, child) {
                 return FadeTransition(
                   opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
@@ -105,10 +108,17 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: RouteNames.details,
+      builder: (context, state) {
+        final realEstate = state.extra as RealEstateEntity;
+        return  DetailsScreen(realEstateEntity: realEstate);
+      },
+    ),
+    GoRoute(
+      path: RouteNames.gallery,
       pageBuilder: (context, state) {
         return MaterialPage(
           key: state.pageKey,
-          child: const DetailsScreen(),
+          child:  GalleryScreen(),
         );
       },
     ),

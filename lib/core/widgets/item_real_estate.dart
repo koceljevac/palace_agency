@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../features/home/domain/entities/real_estate_entity.dart';
+
 class ItemRealEstate extends StatelessWidget {
   final List<String> labels = ["SALE", "FLATS", "NEW CONSTRUCTION"];
   final VoidCallback onTap;
+  final RealEstateEntity realEstateEntity;
 
-  ItemRealEstate({super.key, required this.onTap});
+
+  ItemRealEstate({super.key, required this.onTap,required this.realEstateEntity});
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +29,11 @@ class ItemRealEstate extends StatelessWidget {
                 ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(25)),
                   child: Hero(
-                    tag: 'realEstateImage',
+                    tag: realEstateEntity.images.first.id,
                     child: Image.network(
                       width: double.infinity,
                       height: 170,
-                      "https://images.pexels.com/photos/262405/pexels-photo-262405.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                      realEstateEntity.images.first.url,
                       fit: BoxFit.fitWidth,
                     ),
                   ),
@@ -81,7 +85,7 @@ class ItemRealEstate extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Premium Modern House',
+                    realEstateEntity.title,
                     style: GoogleFonts.ptSans(
                       fontSize: 16,
                     ),
@@ -90,7 +94,7 @@ class ItemRealEstate extends StatelessWidget {
                     children: [
                       const Icon(Icons.location_on_sharp, color: Colors.black26),
                       Text(
-                        'Premium Modern House',
+                        realEstateEntity.subTitle,
                         style: GoogleFonts.ptSans(fontSize: 14, color: Colors.grey),
                       ),
                     ],
